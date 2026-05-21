@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
-import Scene from './components/Scene';
-import Controls from './components/Controls';
-import { useExposureStore } from './store';
+import { useEffect, useRef } from "react";
+import Scene from "./components/Scene";
+import Controls from "./components/Controls";
+import { useExposureStore } from "./store";
+import ExpoIndicator from "./components/ExpoIndicator";
 
 export default function App() {
   const tick = useExposureStore((s) => s.tick);
@@ -27,6 +28,7 @@ export default function App() {
   return (
     <div className="exposure-bucket-app">
       <div className="exposure-bucket-stage">
+        <ExpoIndicator />
         <Scene />
       </div>
       <div className="exposure-bucket-floating-controls">

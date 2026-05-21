@@ -115,7 +115,8 @@ function SteppedSlider({ label, value, stops, onChange, format, tickLabel }) {
 // Each entry is the underlying store-space value at that stop.
 
 // Shutter: tool_seconds = 250 / denom. From 1/30 (slow) to 1/500 (fast).
-const SHUTTER_STOPS = [8.333, 4.167, 2.0, 1.0, 0.5];
+// Half stops interleaved: 1/30, 1/45, 1/60, 1/90, 1/125, 1/200, 1/250, 1/350, 1/500.
+const SHUTTER_STOPS = [8.333, 5.556, 4.167, 2.778, 2.0, 1.25, 1.0, 0.714, 0.5];
 // Aperture: openness = (1.4 / f)². From f/1.4 to f/16.
 const APERTURE_STOPS = [
   1.0, 0.49, 0.25, 0.123, 0.0625, 0.0306, 0.0162, 0.00766,
@@ -192,6 +193,15 @@ export default function Controls() {
           >
             {shutterOpen ? "close shutter" : "open shutter"}
           </button>
+          {showReadout && (
+            <button
+              className="exposure-bucket-btn exposure-bucket-btn-primary"
+              onClick={triggerShot}
+              style={{ width: "100%", marginTop: "6px" }}
+            >
+              take shot
+            </button>
+          )}
         </div>
       )}
 
@@ -228,12 +238,6 @@ export default function Controls() {
             <div className="exposure-bucket-readout-hint">{expoLabel}</div>
           </div>
           <div className="exposure-bucket-button-row">
-            <button
-              className="exposure-bucket-btn exposure-bucket-btn-primary"
-              onClick={triggerShot}
-            >
-              take shot
-            </button>
             <button
               className="exposure-bucket-btn exposure-bucket-btn-secondary"
               onClick={reset}

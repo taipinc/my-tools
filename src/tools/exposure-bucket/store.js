@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 // Exposure metaphor:
 //   rainIntensity     ~ scene luminance (drops/sec falling toward the bucket)
@@ -24,10 +24,10 @@ function capacityFor(width) {
 
 export const useExposureStore = create((set, get) => ({
   rainIntensity: 1.0,
-  apertureOpenness: 1.0,           // f/1.4 (max stop)
-  shutterOpen: true,
-  shutterDuration: 2.0,            // 1/125 s
-  bucketWidth: 1.131,              // ISO 200
+  apertureOpenness: 1.0, // f/1.4 (max stop)
+  shutterOpen: false,
+  shutterDuration: 2.0, // 1/125 s
+  bucketWidth: 1.131, // ISO 200
   _drops: 0,
   fillLevel: 0,
   _shutterTimeoutId: null,
@@ -59,7 +59,8 @@ export const useExposureStore = create((set, get) => ({
     const s = get();
     if (!s.shutterOpen) return;
     const cap = capacityFor(s.bucketWidth);
-    const dropsPerSec = BASE_FILL_PER_SECOND * s.rainIntensity * s.apertureOpenness;
+    const dropsPerSec =
+      BASE_FILL_PER_SECOND * s.rainIntensity * s.apertureOpenness;
     const drops = Math.min(cap, s._drops + dropsPerSec * dt);
     set({ _drops: drops, fillLevel: drops / (s.bucketWidth * s.bucketWidth) });
   },
@@ -67,6 +68,11 @@ export const useExposureStore = create((set, get) => ({
   reset: () => {
     const s = get();
     if (s._shutterTimeoutId) clearTimeout(s._shutterTimeoutId);
-    set({ _drops: 0, fillLevel: 0, _shutterTimeoutId: null, shutterOpen: true });
+    set({
+      _drops: 0,
+      fillLevel: 0,
+      _shutterTimeoutId: null,
+      shutterOpen: false,
+    });
   },
 }));

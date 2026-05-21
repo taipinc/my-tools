@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
-import './tool.css';
-import App from './App.jsx';
-import { PresentationProvider } from './presentation.jsx';
-import { useExposureStore } from './store';
+import { useEffect, useRef, useState } from "react";
+import "./tool.css";
+import App from "./App.jsx";
+import { PresentationProvider } from "./presentation.jsx";
+import { useExposureStore } from "./store";
 
 const TOTAL_STAGES = 6; // 0..5
 
 export default function ExposureBucket() {
-  const [mode, setMode] = useState('normal'); // 'normal' | 'presentation'
+  const [mode, setMode] = useState("normal"); // 'normal' | 'presentation'
   const [stage, setStage] = useState(0);
   const [controlsRevealed, setControlsRevealed] = useState(false);
   const revealTimerRef = useRef(null);
@@ -30,14 +30,15 @@ export default function ExposureBucket() {
     setApertureOpenness(1.0);
     setShutterDuration(2.0);
     setBucketWidth(1.131);
-    setShutterOpen(true);
+    setShutterOpen(false);
   }
 
   function enterPresentation() {
     resetToDefaults();
+    setShutterOpen(true); // presentation starts with shutter open
     setStage(0);
     setControlsRevealed(false);
-    setMode('presentation');
+    setMode("presentation");
   }
 
   function exitPresentation() {
@@ -45,7 +46,7 @@ export default function ExposureBucket() {
       clearTimeout(revealTimerRef.current);
       revealTimerRef.current = null;
     }
-    setMode('normal');
+    setMode("normal");
     setStage(0);
     setControlsRevealed(false);
   }
@@ -73,13 +74,33 @@ export default function ExposureBucket() {
     setControlsRevealed(false);
   }
 
-  useEffect(() => () => {
-    if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    },
+    [],
+  );
 
-  const isPresenting = mode === 'presentation';
+  const isPresenting = mode === "presentation";
   const presentationValue = isPresenting ? { stage, controlsRevealed } : null;
   const atFinal = stage >= TOTAL_STAGES - 1;
+
+  // Keyboard shortcuts in presentation mode: ArrowRight / Space → next.
+  useEffect(() => {
+    if (!isPresenting) return;
+    function onKey(e) {
+      if (e.key === "ArrowRight" || e.key === " ") {
+        e.preventDefault();
+        if (stage === 0) {
+          advanceToStage(1);
+        } else if (!atFinal) {
+          handleNext();
+        }
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isPresenting, stage, atFinal]);
 
   return (
     <div className="exposure-bucket-root">
@@ -106,10 +127,11 @@ export default function ExposureBucket() {
             >
               <h2 className="exposure-bucket-presentation-title">
                 Once Upon a Time...
-                <br />
-                a Bucket
+                <br />a Bucket
               </h2>
-              <p className="exposure-bucket-presentation-hint">click anywhere to begin</p>
+              <p className="exposure-bucket-presentation-hint">
+                click anywhere to begin
+              </p>
             </div>
           )}
 
