@@ -1,0 +1,82 @@
+.logic-gates-root .toolbar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  min-width: 200px;
+  max-height: calc(100% - 40px);
+  overflow-y: auto;
+}
+
+.logic-gates-root .toolbar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 15px;
+}
+
+.logic-gates-root .toolbar-collapsed .toolbar-header {
+  margin-bottom: 0;
+}
+
+.logic-gates-root .toolbar-toggle {
+  font-size: 10px;
+  color: #888;
+}
+
+.logic-gates-root .toolbar h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.logic-gates-root .toolbar-section {
+  margin-bottom: 10px;
+}
+
+.logic-gates-root .toolbar-section-title {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.logic-gates-root .toolbar-separator {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #ddd, transparent);
+  margin: 15px 0;
+}
+
+.logic-gates-root .toolbar-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.logic-gates-root .toolbar-button {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.logic-gates-root .toolbar-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.logic-gates-root .toolbar-button:active {
+  transform: translateY(0);
+}

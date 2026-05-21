@@ -1,0 +1,25 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+
+const { title, activeSlug } = Astro.props as { title?: string; activeSlug?: string };
+const pageTitle = title ? `${title} — Shabtai's Teaching Tools` : "Shabtai's Teaching Tools";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="min-h-screen">
+    <div class="flex">
+      <Sidebar activeSlug={activeSlug} />
+      <main class="flex-1 min-w-0">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

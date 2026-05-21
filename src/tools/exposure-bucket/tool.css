@@ -1,0 +1,346 @@
+/* All selectors scoped under .exposure-bucket-root */
+
+.exposure-bucket-root,
+.exposure-bucket-root * {
+    box-sizing: border-box;
+}
+
+.exposure-bucket-root {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    font-family: var(--font-sans, system-ui, sans-serif);
+    color: #1a1a1a;
+}
+
+.exposure-bucket-root .exposure-bucket-app {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: #fafaf7;
+}
+
+.exposure-bucket-root .exposure-bucket-stage {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 16px;
+}
+
+.exposure-bucket-root .exposure-bucket-scene-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exposure-bucket-root .exposure-bucket-svg {
+    width: 100%;
+    height: 100%;
+    max-width: 900px;
+    max-height: 100%;
+    overflow: visible;
+}
+
+/* Rain — diagonal, fast, black */
+.exposure-bucket-root .exposure-bucket-rain line {
+    animation-name: exposure-bucket-rain-fall;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+@keyframes exposure-bucket-rain-fall {
+    0% {
+        transform: rotate(var(--drop-tilt, 15deg)) translate(0, 0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    85% {
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(var(--drop-tilt, 15deg))
+            translate(0, var(--drop-travel, 500px));
+        opacity: 0;
+    }
+}
+
+/* Shutter — two iso-projected halves that slide apart along iso-y.
+   Each half is translated by (dx, dy) computed in Scene.jsx so the
+   motion is parallel to the iso-y axis. */
+.exposure-bucket-root .exposure-bucket-shutter-top,
+.exposure-bucket-root .exposure-bucket-shutter-bottom {
+    transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.exposure-bucket-root .exposure-bucket-shutter-top.is-open,
+.exposure-bucket-root .exposure-bucket-shutter-bottom.is-open {
+    transform: translate(var(--shutter-dx, 0), var(--shutter-dy, 0));
+}
+
+/* Floating controls — no panel frame, no background. Each control group
+   is positioned absolutely so it sits at the y-level of the SVG subject
+   it controls. */
+
+.exposure-bucket-root .exposure-bucket-floating-controls {
+    width: 240px;
+    flex-shrink: 0;
+    position: relative;
+    padding: 16px 18px;
+    background: transparent;
+}
+
+.exposure-bucket-root .exposure-bucket-controls {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.exposure-bucket-root .exposure-bucket-floating-group {
+    position: absolute;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.exposure-bucket-root .exposure-bucket-floating-group.is-top {
+    top: 0;
+    transform: none;
+}
+
+.exposure-bucket-root .exposure-bucket-floating-group.is-bottom {
+    bottom: 0;
+    top: auto;
+    transform: none;
+    pointer-events: none;
+}
+
+.exposure-bucket-root .exposure-bucket-floating-group.is-bottom > * {
+    pointer-events: auto;
+}
+
+.exposure-bucket-root .exposure-bucket-controls-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #8a8675;
+    margin-bottom: 10px;
+}
+
+.exposure-bucket-root .exposure-bucket-slider {
+    display: block;
+    margin-bottom: 14px;
+}
+
+.exposure-bucket-root .exposure-bucket-slider-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+}
+
+.exposure-bucket-root .exposure-bucket-slider-label {
+    font-size: 12px;
+    color: #3a3a32;
+}
+
+.exposure-bucket-root .exposure-bucket-slider-value {
+    font-size: 11px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    color: #6a6658;
+}
+
+.exposure-bucket-root .exposure-bucket-slider input[type="range"] {
+    width: 100%;
+    accent-color: #1a1a1a;
+}
+
+/* Stepped slider — tick marks above the slider track */
+.exposure-bucket-root .exposure-bucket-stepped {
+    position: relative;
+    /* Native range thumbs are ~16px wide; track has a half-thumb gutter
+     at each end. Pad the tick rail to match so ticks line up with the
+     thumb's center positions at each stop. */
+    padding: 0;
+}
+
+.exposure-bucket-root .exposure-bucket-tick-row {
+    position: relative;
+    height: 8px;
+    margin: 0 8px 2px 8px;
+}
+
+.exposure-bucket-root .exposure-bucket-tick {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: #b8b3a3;
+    transform: translateX(-50%);
+}
+
+.exposure-bucket-root .exposure-bucket-tick.is-active {
+    background: #1a1a1a;
+}
+
+.exposure-bucket-root .exposure-bucket-stepped input[type="range"] {
+    width: 100%;
+    accent-color: #1a1a1a;
+    display: block;
+}
+
+.exposure-bucket-root .exposure-bucket-readout {
+    margin-top: 22px;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid #e3e0d6;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.exposure-bucket-root .exposure-bucket-readout-hint {
+    margin-top: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #8a8675;
+}
+
+.exposure-bucket-root .exposure-bucket-button-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.exposure-bucket-root .exposure-bucket-btn {
+    flex: 1;
+    padding: 9px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+}
+
+.exposure-bucket-root .exposure-bucket-btn-primary {
+    background: #1a1a1a;
+    color: #fafaf7;
+}
+.exposure-bucket-root .exposure-bucket-btn-primary:hover {
+    background: #333;
+}
+
+.exposure-bucket-root .exposure-bucket-btn-secondary {
+    background: transparent;
+    color: #1a1a1a;
+    border: 1px solid #1a1a1a;
+}
+.exposure-bucket-root .exposure-bucket-btn-secondary:hover {
+    background: #1a1a1a10;
+}
+
+/* Presentation mode -------------------------------------------------- */
+
+.exposure-bucket-root .exposure-bucket-mode-toggle {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    z-index: 5;
+    padding: 9px 14px;
+    background: #fff;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    color: #1a1a1a;
+}
+.exposure-bucket-root .exposure-bucket-mode-toggle:hover {
+    background: #1a1a1a;
+    color: #fafaf7;
+}
+
+.exposure-bucket-root .exposure-bucket-presentation-intro {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    text-align: center;
+    padding: 24px;
+}
+
+.exposure-bucket-root .exposure-bucket-presentation-title {
+    font-family: var(--font-serif, Georgia, "Times New Roman", serif);
+    font-size: clamp(36px, 6.5vw, 84px);
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 0;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
+}
+
+.exposure-bucket-root .exposure-bucket-presentation-hint {
+    margin-top: 28px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #8a8675;
+}
+
+.exposure-bucket-root .exposure-bucket-presentation-nav {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    z-index: 6;
+    display: flex;
+    gap: 8px;
+}
+
+.exposure-bucket-root .exposure-bucket-nav-btn {
+    padding: 9px 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    border: 1px solid #1a1a1a;
+    background: #fff;
+    color: #1a1a1a;
+}
+.exposure-bucket-root .exposure-bucket-nav-btn:hover:not(:disabled) {
+    background: #1a1a1a;
+    color: #fafaf7;
+}
+.exposure-bucket-root .exposure-bucket-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.exposure-bucket-root .exposure-bucket-nav-btn-primary {
+    background: #1a1a1a;
+    color: #fafaf7;
+}
+.exposure-bucket-root .exposure-bucket-nav-btn-primary:hover:not(:disabled) {
+    background: #333;
+    color: #fafaf7;
+}
+
+.exposure-bucket-root .exposure-bucket-nav-btn-ghost {
+    background: transparent;
+    border-color: #b8b3a3;
+    color: #6a6658;
+}

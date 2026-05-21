@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { allTools, findTool } from '../../data/tools';
+
+export function getStaticPaths() {
+  return allTools
+    .filter((tool) => tool.status === 'coming-soon')
+    .map((tool) => ({ params: { slug: tool.slug } }));
+}
+
+const { slug } = Astro.params;
+const found = findTool(slug!);
+if (!found) {
+  return Astro.redirect('/');
+}
+const { tool, category } = found;
+---
+
+<Layout title={tool.name} activeSlug={tool.slug}>
+  <div class="max-w-3xl mx-auto px-10 py-16">
+    <nav class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-6">
+      <a href="/" class="hover:text-[var(--color-ink)]">Home</a>
+      <span class="mx-2 opacity-60">/</span>
+      <span>{category.name}</span>
+      <span class="mx-2 opacity-60">/</span>
+      <span class="text-[var(--color-ink)]">{tool.name}</span>
+    </nav>
+
+    <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
+    <p class="mt-3 text-[14px] text-[var(--color-ink-soft)] max-w-xl leading-relaxed">
+      {tool.blurb}
+    </p>
+
+    <div class="mt-10 p-8 rounded border border-dashed border-[var(--color-rule)] bg-[var(--color-paper-2)]/30 text-center">
+      <div class="text-[11px] uppercase tracking-[0.2em] text-[var(--color-mark)]">
+        Coming soon
+      </div>
+      <p class="mt-2 text-[13px] text-[var(--color-ink-soft)]">
+        This tool is being ported in. The interactive version will live right here.
+      </p>
+      {tool.source && (
+        <a
+          href={tool.source}
+          target="_blank"
+          rel="noreferrer"
+          class="inline-block mt-4 text-[12px] underline text-[var(--color-ink)] hover:text-[var(--color-accent)]"
+        >
+          View source on GitHub →
+        </a>
+      )}
+    </div>
+  </div>
+</Layout>

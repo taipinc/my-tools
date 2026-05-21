@@ -1,0 +1,294 @@
+.logic-gates-root .save-load-panel {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.logic-gates-root .save-load-panel.collapsed .save-load-toggle {
+  padding: 12px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+}
+
+.logic-gates-root .save-load-panel.collapsed .save-load-toggle:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.logic-gates-root .save-load-panel.expanded .save-load-content {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  width: 450px;
+  max-height: calc(100% - 80px);
+  overflow-y: auto;
+}
+
+.logic-gates-root .save-load-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #4CAF50;
+}
+
+.logic-gates-root .save-load-header h3 {
+  margin: 0;
+  color: #4CAF50;
+  font-size: 18px;
+}
+
+.logic-gates-root .save-load-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logic-gates-root .save-load-sections section {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.logic-gates-root .save-load-sections section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.logic-gates-root .save-load-sections h4 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.logic-gates-root .save-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.logic-gates-root .save-controls input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.logic-gates-root .save-controls button {
+  padding: 8px 16px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logic-gates-root .save-controls button:hover:not(:disabled) {
+  background: #45a049;
+}
+
+.logic-gates-root .save-controls button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.logic-gates-root .circuits-list {
+  max-height: 250px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.logic-gates-root .empty-message {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.logic-gates-root .circuit-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f9f9f9;
+  transition: background 0.2s;
+}
+
+.logic-gates-root .circuit-item:hover {
+  background: #f0f0f0;
+}
+
+.logic-gates-root .circuit-info {
+  flex: 1;
+}
+
+.logic-gates-root .circuit-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.logic-gates-root .circuit-date {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.logic-gates-root .circuit-stats {
+  font-size: 11px;
+  color: #999;
+}
+
+.logic-gates-root .circuit-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.logic-gates-root .circuit-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logic-gates-root .load-btn {
+  background: #2196F3;
+  color: white;
+}
+
+.logic-gates-root .load-btn:hover {
+  background: #0b7dda;
+}
+
+.logic-gates-root .delete-btn {
+  background: #f44336;
+  color: white;
+}
+
+.logic-gates-root .delete-btn:hover {
+  background: #da190b;
+}
+
+.logic-gates-root .export-import-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.logic-gates-root .export-btn,
+.logic-gates-root .import-file-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.logic-gates-root .export-btn {
+  background: #FF9800;
+  color: white;
+}
+
+.logic-gates-root .export-btn:hover {
+  background: #e68900;
+}
+
+.logic-gates-root .import-file-btn {
+  background: #9C27B0;
+  color: white;
+  display: block;
+}
+
+.logic-gates-root .import-file-btn:hover {
+  background: #7b1fa2;
+}
+
+.logic-gates-root .export-data {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.logic-gates-root .export-data textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 11px;
+  resize: vertical;
+}
+
+.logic-gates-root .export-data button {
+  align-self: flex-end;
+  padding: 6px 16px;
+  background: #666;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.logic-gates-root .export-data button:hover {
+  background: #555;
+}
+
+.logic-gates-root .import-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.logic-gates-root .import-area textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 11px;
+  resize: vertical;
+}
+
+.logic-gates-root .import-btn {
+  align-self: flex-end;
+  padding: 8px 16px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.logic-gates-root .import-btn:hover {
+  background: #45a049;
+}

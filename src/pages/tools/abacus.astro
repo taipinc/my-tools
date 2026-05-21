@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { findTool } from '../../data/tools';
+import Abacus from '../../tools/abacus/Abacus.jsx';
+
+const { tool, category } = findTool('abacus')!;
+---
+
+<Layout title={tool.name} activeSlug={tool.slug}>
+  <div class="px-10 py-10 max-w-6xl mx-auto">
+    <nav class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-4">
+      <a href="/" class="hover:text-[var(--color-ink)]">Home</a>
+      <span class="mx-2 opacity-60">/</span>
+      <span>{category.name}</span>
+      <span class="mx-2 opacity-60">/</span>
+      <span class="text-[var(--color-ink)]">{tool.name}</span>
+    </nav>
+
+    <header class="mb-8">
+      <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
+      <p class="mt-2 text-[14px] text-[var(--color-ink-soft)] max-w-2xl">{tool.blurb}</p>
+    </header>
+
+    <div class="rounded-lg border border-[var(--color-rule)] bg-white p-6 shadow-sm">
+      <Abacus client:only="react" />
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,27 @@
+/* Card system — scoped to the Perceptron tool */
+.perceptron-root .card {
+  border: 3px solid #1a1a1a;
+  border-radius: 24px;
+  padding: 24px;
+  position: relative;
+}
+
+.perceptron-root .card-green { background-color: #c8e6c0; }
+.perceptron-root .card-blue { background-color: #bdd7f5; }
+.perceptron-root .card-yellow { background-color: #f5e6a3; }
+.perceptron-root .card-red { background-color: #f5c4b8; }
+.perceptron-root .card-neutral { background-color: #ffffff; }
+
+.perceptron-root .card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1a1a1a;
+  opacity: 0.5;
+  margin-bottom: 12px;
+}
+
+.perceptron-root code,
+.perceptron-root .mono {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

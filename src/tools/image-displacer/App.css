@@ -1,0 +1,519 @@
+/* Scoped to the Image Displacer tool. Global resets and tailwind import removed. */
+
+.image-displacer-root {
+  font-family: 'Public Sans', system-ui, sans-serif;
+  background-color: #f5f5f5;
+  color: #111;
+  overscroll-behavior: none;
+  width: 100%;
+  height: 100%;
+}
+
+.image-displacer-root *,
+.image-displacer-root *::before,
+.image-displacer-root *::after {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root {
+    background-color: #111;
+    color: #f5f5f5;
+  }
+}
+
+/* ── Layout ───────────────────────────────────────────────────── */
+.image-displacer-root .app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.image-displacer-root .control-panel {
+  padding: 1.25rem;
+  overflow-y: auto;
+  background-color: #fff;
+  width: 100%;
+  max-height: 50%;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.image-displacer-root .viewer-panel {
+  flex-grow: 1;
+  min-height: 0;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .image-displacer-root .app-container { flex-direction: row; }
+
+  .image-displacer-root .control-panel {
+    width: 340px;
+    flex-shrink: 0;
+    max-height: 100%;
+    border-bottom: none;
+    border-right: 1px solid #e0e0e0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .control-panel {
+    background-color: #1a1a1a;
+    border-color: #2e2e2e;
+  }
+}
+
+/* ── Panel header ─────────────────────────────────────────────── */
+.image-displacer-root .panel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.image-displacer-root .panel-header h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+.image-displacer-root .header-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .panel-header h1 { color: #f5f5f5; }
+}
+
+/* ── Info box ─────────────────────────────────────────────────── */
+.image-displacer-root .info-box {
+  margin-bottom: 1rem;
+  padding: 0.65rem 0.85rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.5rem;
+  font-size: 0.78rem;
+  color: #1e40af;
+  line-height: 1.5;
+}
+
+.image-displacer-root .info-box-title {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.image-displacer-root .info-box-title svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex-shrink: 0;
+}
+
+.image-displacer-root .info-link {
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.image-displacer-root .info-link:hover { color: #1d4ed8; }
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .info-box {
+    background: #1e2d3d;
+    border-color: #1e40af;
+    color: #93c5fd;
+  }
+  .image-displacer-root .info-link { color: #60a5fa; }
+  .image-displacer-root .info-link:hover { color: #93c5fd; }
+}
+
+/* ── Settings card ────────────────────────────────────────────── */
+.image-displacer-root .settings-card {
+  margin-top: 0.85rem;
+  padding: 0.85rem;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+}
+
+.image-displacer-root .settings-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #888;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .settings-card {
+    background: #1a1a1a;
+    border-color: #2e2e2e;
+  }
+  .image-displacer-root .settings-title {
+    color: #666;
+    border-bottom-color: #2e2e2e;
+  }
+}
+
+/* ── Setting rows ─────────────────────────────────────────────── */
+.image-displacer-root .setting-row { margin-bottom: 0.85rem; }
+
+.image-displacer-root .setting-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.image-displacer-root .setting-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.image-displacer-root .setting-hint {
+  font-size: 0.7rem;
+  color: #888;
+  margin: 0.1rem 0 0;
+}
+
+.image-displacer-root .setting-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .setting-label { color: #ddd; }
+  .image-displacer-root .setting-value { color: #60a5fa; }
+}
+
+/* ── Toggle switch ────────────────────────────────────────────── */
+.image-displacer-root .toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.image-displacer-root .toggle-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 2.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+  padding: 0;
+}
+
+.image-displacer-root .toggle-switch:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.image-displacer-root .toggle-on  { background-color: #2563eb; }
+.image-displacer-root .toggle-off { background-color: #ccc; }
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .toggle-off { background-color: #444; }
+}
+
+.image-displacer-root .toggle-thumb {
+  display: block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 9999px;
+  background: white;
+  transition: transform 0.15s;
+}
+
+.image-displacer-root .toggle-thumb-on  { transform: translateX(1.15rem); }
+.image-displacer-root .toggle-thumb-off { transform: translateX(0.18rem); }
+
+/* ── Range input ──────────────────────────────────────────────── */
+.image-displacer-root .range-input {
+  width: 100%;
+  height: 0.25rem;
+  appearance: none;
+  border-radius: 9999px;
+  background: #ddd;
+  cursor: pointer;
+  accent-color: #2563eb;
+  margin: 0;
+}
+
+.image-displacer-root .range-input:disabled { opacity: 0.35; cursor: not-allowed; }
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .range-input { background: #333; }
+}
+
+/* ── Fieldset ─────────────────────────────────────────────────── */
+.image-displacer-root .fieldset-group {
+  border: 1px solid #e0e0e0;
+  border-radius: 0.4rem;
+  padding: 0.65rem 0.75rem;
+  margin: 0;
+}
+
+.image-displacer-root .fieldset-legend {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #888;
+  padding: 0 0.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .fieldset-group { border-color: #2e2e2e; }
+  .image-displacer-root .fieldset-legend { color: #666; }
+}
+
+/* ── Color input ──────────────────────────────────────────────── */
+.image-displacer-root .color-input {
+  width: 100%;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  background: none;
+}
+
+.image-displacer-root .color-input:disabled { opacity: 0.35; cursor: not-allowed; }
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .color-input { border-color: #2e2e2e; }
+}
+
+/* ── Export button ────────────────────────────────────────────── */
+.image-displacer-root .export-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.image-displacer-root .export-btn svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.image-displacer-root .export-btn:hover:not(:disabled) { background: #1d4ed8; }
+
+.image-displacer-root .export-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.image-displacer-root .export-hint {
+  font-size: 0.68rem;
+  color: #888;
+  text-align: center;
+  margin-top: 0.35rem;
+}
+
+/* ── How-to card ──────────────────────────────────────────────── */
+.image-displacer-root .how-to-card {
+  margin-top: 0.85rem;
+  padding: 0.75rem 0.85rem;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-size: 0.72rem;
+  color: #666;
+}
+
+.image-displacer-root .how-to-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #444;
+  margin: 0 0 0.4rem;
+}
+
+.image-displacer-root .how-to-list {
+  padding-left: 1rem;
+  margin: 0 0 0.4rem;
+  line-height: 1.7;
+}
+
+.image-displacer-root .how-to-note {
+  color: #d32f2f;
+  font-weight: 500;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .how-to-card {
+    background: #1a1a1a;
+    border-color: #2e2e2e;
+    color: #888;
+  }
+  .image-displacer-root .how-to-title { color: #bbb; }
+  .image-displacer-root .how-to-note { color: #f87171; }
+}
+
+/* ── Upload card (ImageUploader) ──────────────────────────────── */
+.image-displacer-root .upload-card {
+  padding: 0.85rem;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.image-displacer-root .upload-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #888;
+  margin: 0 0 0.1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.image-displacer-root .upload-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.image-displacer-root .upload-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.image-displacer-root .upload-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: #2563eb;
+  color: white;
+  border-radius: 9999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.image-displacer-root .upload-label-hint {
+  font-weight: 400;
+  color: #888;
+  font-size: 0.7rem;
+}
+
+.image-displacer-root .file-input {
+  width: 100%;
+  font-size: 0.75rem;
+  font-family: inherit;
+  color: #555;
+  border: 1px solid #ddd;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  background: white;
+}
+
+.image-displacer-root .file-input:hover { border-color: #2563eb; }
+
+.image-displacer-root .file-input::file-selector-button {
+  margin-right: 0.65rem;
+  padding: 0.35rem 0.65rem;
+  border: none;
+  border-right: 1px solid #ddd;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.image-displacer-root .file-input::file-selector-button:hover { background: #dbeafe; }
+
+.image-displacer-root .upload-hint {
+  font-size: 0.67rem;
+  color: #888;
+  margin: 0;
+}
+
+.image-displacer-root .reset-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  background: none;
+  color: #888;
+  border: 1px solid #ddd;
+  border-radius: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.image-displacer-root .reset-btn svg { width: 0.8rem; height: 0.8rem; }
+.image-displacer-root .reset-btn:hover { border-color: #aaa; color: #555; }
+
+@media (prefers-color-scheme: dark) {
+  .image-displacer-root .upload-card {
+    background: #1a1a1a;
+    border-color: #2e2e2e;
+  }
+  .image-displacer-root .upload-title {
+    color: #666;
+    border-bottom-color: #2e2e2e;
+  }
+  .image-displacer-root .upload-label { color: #ddd; }
+  .image-displacer-root .file-input {
+    background: #111;
+    border-color: #333;
+    color: #999;
+  }
+  .image-displacer-root .file-input:hover { border-color: #2563eb; }
+  .image-displacer-root .file-input::file-selector-button {
+    background: #1e2d3d;
+    color: #60a5fa;
+    border-right-color: #333;
+  }
+  .image-displacer-root .file-input::file-selector-button:hover { background: #1e3a5f; }
+  .image-displacer-root .reset-btn {
+    background: none;
+    border-color: #333;
+    color: #666;
+  }
+  .image-displacer-root .reset-btn:hover { border-color: #555; color: #aaa; }
+}

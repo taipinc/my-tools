@@ -1,0 +1,98 @@
+.logic-gates-root .help-panel {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.logic-gates-root .help-panel.collapsed .help-toggle {
+  padding: 12px 20px;
+  background: #007acc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+}
+
+.logic-gates-root .help-panel.collapsed .help-toggle:hover {
+  background: #005a9e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.logic-gates-root .help-panel.expanded .help-content {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  max-height: calc(100% - 80px);
+  overflow-y: auto;
+}
+
+.logic-gates-root .help-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #007acc;
+}
+
+.logic-gates-root .help-header h3 {
+  margin: 0;
+  color: #007acc;
+  font-size: 18px;
+}
+
+.logic-gates-root .close-button {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.logic-gates-root .close-button:hover {
+  color: #007acc;
+}
+
+.logic-gates-root .help-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.logic-gates-root .help-sections section h4 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.logic-gates-root .help-sections section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.logic-gates-root .help-sections section li {
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.logic-gates-root .help-sections section li strong {
+  color: #007acc;
+}
