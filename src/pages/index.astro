@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { categories } from '../data/tools';
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout>
@@ -41,7 +42,7 @@ import { categories } from '../data/tools';
               {category.tools.map((tool) => (
                 <li>
                   <a
-                    href={`/tools/${tool.slug}`}
+                    href={`${base}tools/${tool.slug}`}
                     class="block p-4 rounded border border-[var(--color-rule)] bg-[var(--color-paper-2)]/40 hover:bg-[var(--color-paper-2)] hover:border-[var(--color-ink-soft)] transition-colors h-full"
                   >
                     <div class="flex items-center justify-between">

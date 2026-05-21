@@ -9,7 +9,7 @@ const { tool, category } = findTool('abacus')!;
 <Layout title={tool.name} activeSlug={tool.slug}>
   <div class="px-10 py-10 max-w-6xl mx-auto">
     <nav class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-4">
-      <a href="/" class="hover:text-[var(--color-ink)]">Home</a>
+      <a href={import.meta.env.BASE_URL} class="hover:text-[var(--color-ink)]">Home</a>
       <span class="mx-2 opacity-60">/</span>
       <span>{category.name}</span>
       <span class="mx-2 opacity-60">/</span>

@@ -19,7 +19,7 @@ const { tool, category } = found;
 <Layout title={tool.name} activeSlug={tool.slug}>
   <div class="max-w-3xl mx-auto px-10 py-16">
     <nav class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-6">
-      <a href="/" class="hover:text-[var(--color-ink)]">Home</a>
+      <a href={import.meta.env.BASE_URL} class="hover:text-[var(--color-ink)]">Home</a>
       <span class="mx-2 opacity-60">/</span>
       <span>{category.name}</span>
       <span class="mx-2 opacity-60">/</span>
