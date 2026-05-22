@@ -48,11 +48,56 @@ src/
    }
    ```
 
-6. **Create the page** `src/pages/tools/<slug>.astro` — mount with `client:only="react"`. Use the standard "card in a container" layout for contained tools, or the `h-screen` flex layout for fullscreen/canvas tools (see existing pages for templates).
+6. **Create the page** `src/pages/tools/<slug>.astro` — mount with `client:only="react"` using the standard tool-page layout (see "Tool page layout" below). All tool pages share this layout regardless of whether the tool is fullscreen/canvas or contained.
 
 7. **Flip the registry** entry to `status: 'live'`. The sidebar, index, and `[slug].astro`'s filter all update automatically — the explicit `<slug>.astro` page takes precedence over the dynamic stub.
 
 8. **Rebuild and verify**: `npm run build` to type-check / catch issues, then `npm run dev` to test in the browser.
+
+## Tool page layout
+
+Every tool page uses the same shell: a viewport-height flex column, with a compact header row (breadcrumb + title with the blurb sitting at the title's baseline on the right), and a single bordered container below that grows to fill the rest of the screen — the tool mounts inside that container.
+
+Template (`src/pages/tools/<slug>.astro`):
+
+```astro
+---
+import Layout from '../../layouts/Layout.astro';
+import { findTool } from '../../data/tools';
+import MyTool from '../../tools/<slug>/index.jsx';
+
+const { tool, category } = findTool('<slug>')!;
+---
+
+<Layout title={tool.name} activeSlug={tool.slug}>
+  <div class="flex flex-col h-screen">
+    <div class="px-10 pt-8 pb-4 shrink-0">
+      <nav class="text-[12px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-2">
+        <a href={import.meta.env.BASE_URL} class="hover:text-[var(--color-ink)]">Home</a>
+        <span class="mx-2 opacity-60">/</span>
+        <span>{category.name}</span>
+        <span class="mx-2 opacity-60">/</span>
+        <span class="text-[var(--color-ink)]">{tool.name}</span>
+      </nav>
+      <div class="flex items-baseline justify-between gap-6">
+        <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
+        <p class="text-[14px] text-[var(--color-ink-soft)]">{tool.blurb}</p>
+      </div>
+    </div>
+
+    <div class="flex-1 min-h-0 mx-10 mb-6 rounded-lg border border-[var(--color-rule)] bg-[#f5f5f5] overflow-hidden">
+      <MyTool client:only="react" />
+    </div>
+  </div>
+</Layout>
+```
+
+Rules:
+- **Title** is always `text-3xl font-semibold tracking-tight` — never resize it per tool.
+- **Title and blurb sit side-by-side** on one row (`flex items-baseline justify-between gap-6`). Blurb is `text-[14px]`. Keep blurbs short so this row doesn't wrap.
+- **Container fills the remaining viewport** (`flex-1 min-h-0`). Tools should size themselves to the container (use `ResizeObserver`, not `window.innerWidth`).
+- **Container background** is `bg-[#f5f5f5]` by default. Only override (e.g., `bg-white`) when a specific tool needs it.
+- The container has `overflow-hidden` — the tool itself must scroll internally if needed.
 
 ## CSS scoping (avoiding collisions)
 
@@ -76,10 +121,9 @@ Mechanical rewrite of a vendored CSS file:
 
 ## Fullscreen / canvas tools
 
-Tools built as single-page apps (`<Stage width={window.innerWidth} ...>`, fixed-position panels) need extra work:
+The standard page layout already gives every tool a viewport-filling container, so canvas/single-page-style tools just need to behave well inside it:
 
 - **Container-relative sizing:** replace `window.innerWidth/innerHeight` + window resize listeners with a `containerRef` + `ResizeObserver`. Initialize dimensions to `{ width: 0, height: 0 }` (not a fallback like 800×600 — the fallback will trigger any "fit on first measurement" logic before the real size arrives).
-- **Use the `h-screen` page layout** so the tool fills viewport minus sidebar (see `tools/logic-gates.astro`).
 - **Vite is stricter than CRA** about JSX-in-`.js` files. Rename any `App.js` containing JSX to `App.jsx`.
 
 ## After adding new dependencies

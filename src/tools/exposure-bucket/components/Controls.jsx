@@ -6,7 +6,9 @@ import { usePresentation, showAt } from "../presentation.jsx";
 // abstract units the simulation uses.
 
 const ISO_STOPS = [100, 200, 400, 800, 1600];
-const F_STOPS = [1.4, 2, 2.8, 4, 5.6, 8, 11, 16];
+const F_STOPS = [
+  1.4, 1.6, 1.8, 2, 2.2, 2.5, 2.8, 3.2, 3.5, 4, 4.5, 5, 5.6, 6.3, 7.1, 8,
+];
 
 // bucketWidth → ISO. Wider bucket = lower ISO. Anchor: width 1.6 → ISO 100.
 // ISO scales with 1/width² (capacity ∝ width², light sensitivity is inverse).
@@ -65,7 +67,15 @@ function Slider({ label, value, min, max, step, onChange, format }) {
 // `stops` is an array of underlying (store-space) values; the slider
 // itself runs over integer indices, so each stop is evenly spaced on
 // the track. Tick marks above the track show every stop position.
-function SteppedSlider({ label, value, stops, onChange, format, tickLabel }) {
+function SteppedSlider({
+  label,
+  value,
+  stops,
+  onChange,
+  format,
+  tickLabel,
+  isFullStop,
+}) {
   // Snap current store value to nearest stop in log-space (matches how
   // photographic stops are perceived).
   const idx = stops.reduce((best, s, i) => {
@@ -87,7 +97,7 @@ function SteppedSlider({ label, value, stops, onChange, format, tickLabel }) {
           {stops.map((s, i) => (
             <span
               key={i}
-              className={`exposure-bucket-tick ${i === idx ? "is-active" : ""}`}
+              className={`exposure-bucket-tick ${i === idx ? "is-active" : ""} ${isFullStop && isFullStop(stops[i]) ? "is-full-stop" : ""}`}
               style={{ left: `${(i / lastIdx) * 100}%` }}
             >
               {tickLabel ? (
@@ -114,13 +124,15 @@ function SteppedSlider({ label, value, stops, onChange, format, tickLabel }) {
 // --- Stop tables -----------------------------------------------------
 // Each entry is the underlying store-space value at that stop.
 
-// Shutter: tool_seconds = 250 / denom. From 1/30 (slow) to 1/500 (fast).
-// Half stops interleaved: 1/30, 1/45, 1/60, 1/90, 1/125, 1/200, 1/250, 1/350, 1/500.
-const SHUTTER_STOPS = [8.333, 5.556, 4.167, 2.778, 2.0, 1.25, 1.0, 0.714, 0.5];
-// Aperture: openness = (1.4 / f)². From f/1.4 to f/16.
-const APERTURE_STOPS = [
-  1.0, 0.49, 0.25, 0.123, 0.0625, 0.0306, 0.0162, 0.00766,
+// 1/3-stop steps from 1/30 to 1/500. tool_seconds = 250 / denom.
+const SHUTTER_STOPS = [
+  8.333, 6.25, 5.0, 4.167, 3.125, 2.5, 2.0, 1.5625, 1.25, 1.0, 0.781, 0.625,
+  0.5,
 ];
+// Aperture: openness = (1.4 / f)². 1/3-stop steps from f/1.4 to f/8.
+const APERTURE_STOPS = [
+  1.4, 1.6, 1.8, 2, 2.2, 2.5, 2.8, 3.2, 3.5, 4, 4.5, 5, 5.6, 6.3, 7.1, 8,
+].map((f) => Math.pow(1.4 / f, 2));
 // ISO via bucket width = 1.6 / sqrt(iso/100). From ISO 100 to ISO 1600.
 const ISO_STOPS_WIDTHS = [1.6, 1.131, 0.8, 0.566, 0.4];
 
@@ -170,7 +182,7 @@ export default function Controls() {
             label="rain (brightness)"
             value={rainIntensity}
             min={0}
-            max={2}
+            max={6}
             step={0.05}
             onChange={setRainIntensity}
           />
@@ -185,6 +197,9 @@ export default function Controls() {
             stops={SHUTTER_STOPS}
             onChange={setShutterDuration}
             format={formatShutter}
+            isFullStop={(v) =>
+              [8.333, 4.167, 2.0, 1.0, 0.5].some((s) => Math.abs(v - s) < 0.001)
+            }
           />
           <button
             className="exposure-bucket-btn exposure-bucket-btn-secondary"
@@ -213,6 +228,11 @@ export default function Controls() {
             stops={APERTURE_STOPS}
             onChange={setApertureOpenness}
             format={formatAperture}
+            isFullStop={(v) =>
+              [1.4, 2, 2.8, 4, 5.6, 8].some(
+                (f) => Math.abs(v - Math.pow(1.4 / f, 2)) < 0.001,
+              )
+            }
           />
         </div>
       )}

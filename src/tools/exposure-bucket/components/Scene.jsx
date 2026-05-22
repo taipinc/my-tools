@@ -373,7 +373,7 @@ export default function Scene() {
               y1={d.y0 - d.length}
               x2={d.x}
               y2={d.y0}
-              stroke="#0a0a0a"
+              stroke="#1d4ed8"
               strokeWidth="2.2"
               strokeOpacity="0.5"
               strokeLinecap="round"

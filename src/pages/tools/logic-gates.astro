@@ -8,17 +8,17 @@ const { tool, category } = findTool('logic-gates')!;
 
 <Layout title={tool.name} activeSlug={tool.slug}>
   <div class="flex flex-col h-screen">
-    <div class="px-10 pt-6 pb-3 shrink-0">
-      <nav class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-2">
+    <div class="px-10 pt-8 pb-4 shrink-0">
+      <nav class="text-[12px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-2">
         <a href={import.meta.env.BASE_URL} class="hover:text-[var(--color-ink)]">Home</a>
         <span class="mx-2 opacity-60">/</span>
         <span>{category.name}</span>
         <span class="mx-2 opacity-60">/</span>
         <span class="text-[var(--color-ink)]">{tool.name}</span>
       </nav>
-      <div class="flex items-baseline justify-between">
-        <h1 class="text-xl font-semibold tracking-tight">{tool.name}</h1>
-        <p class="text-[12px] text-[var(--color-ink-soft)]">{tool.blurb}</p>
+      <div class="flex items-baseline justify-between gap-6">
+        <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
+        <p class="text-[14px] text-[var(--color-ink-soft)]">{tool.blurb}</p>
       </div>
     </div>
 

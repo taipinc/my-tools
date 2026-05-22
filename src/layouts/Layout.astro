@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { Font } from 'astro:assets';
 import Sidebar from '../components/Sidebar.astro';
 
 const { title, activeSlug } = Astro.props as { title?: string; activeSlug?: string };
@@ -12,6 +13,7 @@ const pageTitle = title ? `${title} — Shabtai's Teaching Tools` : "Shabtai's T
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <Font cssVariable="--font-open-sans" preload />
     <title>{pageTitle}</title>
   </head>
   <body class="min-h-screen">

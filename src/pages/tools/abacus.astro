@@ -7,21 +7,22 @@ const { tool, category } = findTool('abacus')!;
 ---
 
 <Layout title={tool.name} activeSlug={tool.slug}>
-  <div class="px-10 py-10 max-w-6xl mx-auto">
-    <nav class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-4">
-      <a href={import.meta.env.BASE_URL} class="hover:text-[var(--color-ink)]">Home</a>
-      <span class="mx-2 opacity-60">/</span>
-      <span>{category.name}</span>
-      <span class="mx-2 opacity-60">/</span>
-      <span class="text-[var(--color-ink)]">{tool.name}</span>
-    </nav>
+  <div class="flex flex-col h-screen">
+    <div class="px-10 pt-8 pb-4 shrink-0">
+      <nav class="text-[12px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-2">
+        <a href={import.meta.env.BASE_URL} class="hover:text-[var(--color-ink)]">Home</a>
+        <span class="mx-2 opacity-60">/</span>
+        <span>{category.name}</span>
+        <span class="mx-2 opacity-60">/</span>
+        <span class="text-[var(--color-ink)]">{tool.name}</span>
+      </nav>
+      <div class="flex items-baseline justify-between gap-6">
+        <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
+        <p class="text-[14px] text-[var(--color-ink-soft)]">{tool.blurb}</p>
+      </div>
+    </div>
 
-    <header class="mb-8">
-      <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
-      <p class="mt-2 text-[14px] text-[var(--color-ink-soft)] max-w-2xl">{tool.blurb}</p>
-    </header>
-
-    <div class="rounded-lg border border-[var(--color-rule)] bg-white p-6 shadow-sm">
+    <div class="flex-1 min-h-0 mx-10 mb-6 rounded-lg border border-[var(--color-rule)] bg-[#f5f5f5] overflow-hidden">
       <Abacus client:only="react" />
     </div>
   </div>

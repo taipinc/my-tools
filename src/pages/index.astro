@@ -1,72 +1,82 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { categories } from '../data/tools';
+import Layout from "../layouts/Layout.astro";
+import { categories } from "../data/tools";
 const base = import.meta.env.BASE_URL;
 ---
 
 <Layout>
-  <div class="max-w-3xl mx-auto px-10 py-16">
-    <header class="mb-12">
-      <div class="text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)] mb-3">
-        Welcome
-      </div>
-      <h1 class="text-4xl font-semibold tracking-tight leading-tight">
-        Shabtai's Teaching Tools
-      </h1>
-      <p class="mt-5 text-[15px] leading-relaxed text-[var(--color-ink-soft)] max-w-xl">
-        A collection of small, hands-on tools I use in my courses — mostly for
-        in-class demonstrations, but built so students can keep poking at them
-        from home. No logins, no tracking, no sign-ups. Pick something from the
-        sidebar and play with it.
-      </p>
-    </header>
-
-    <div class="space-y-12">
-      {categories.map((category) => (
-        <section>
-          <div class="flex items-baseline gap-4 mb-4 pb-2 border-b border-[var(--color-rule)]">
-            <h2 class="text-[12px] uppercase tracking-[0.22em] text-[var(--color-ink)]">
-              {category.name}
-            </h2>
-            <span class="text-[11px] text-[var(--color-ink-soft)]">
-              {category.tools.length} {category.tools.length === 1 ? 'tool' : 'tools'}
-            </span>
-          </div>
-
-          {category.tools.length === 0 ? (
-            <p class="text-[13px] italic text-[var(--color-ink-soft)]">
-              Nothing here yet — coming soon.
+    <div class="px-10 py-16">
+        <header class="mb-12">
+            <div
+                class="text-[12px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)] mb-3"
+            >
+                Welcome
+            </div>
+            <h1 class="text-5xl font-semibold tracking-tight leading-tight">
+                Shabtai's Teaching Tools
+            </h1>
+            <p
+                class="mt-5 text-[17px] leading-relaxed text-[var(--color-ink-soft)] max-w-2xl"
+            >
+                A collection of small interactive tools I use in my teaching to
+                demonstrate concepts around photography, art, and computation.
             </p>
-          ) : (
-            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {category.tools.map((tool) => (
-                <li>
-                  <a
-                    href={`${base}tools/${tool.slug}`}
-                    class="block p-4 rounded border border-[var(--color-rule)] bg-[var(--color-paper-2)]/40 hover:bg-[var(--color-paper-2)] hover:border-[var(--color-ink-soft)] transition-colors h-full"
-                  >
-                    <div class="flex items-center justify-between">
-                      <div class="text-[14px] font-medium text-[var(--color-ink)]">
-                        {tool.name}
-                      </div>
-                      {tool.status === 'coming-soon' && (
-                        <span class="text-[9px] uppercase tracking-wider text-[var(--color-mark)]">soon</span>
-                      )}
-                    </div>
-                    <div class="mt-1.5 text-[12px] leading-relaxed text-[var(--color-ink-soft)]">
-                      {tool.blurb}
-                    </div>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-      ))}
-    </div>
+        </header>
 
-    <footer class="mt-20 pt-6 border-t border-[var(--color-rule)] text-[11px] text-[var(--color-ink-soft)]">
-      Long live the handmade web.
-    </footer>
-  </div>
+        <div class="space-y-12">
+            {
+                categories.map((category) => (
+                    <section>
+                        <div class="flex items-baseline gap-4 mb-4 pb-2 border-b border-[var(--color-rule)]">
+                            <h2 class="text-[14px] font-medium uppercase tracking-[0.22em] text-[var(--color-ink)]">
+                                {category.name}
+                            </h2>
+                            <span class="text-[12px] text-[var(--color-ink-soft)]">
+                                {category.tools.length}{" "}
+                                {category.tools.length === 1 ? "tool" : "tools"}
+                            </span>
+                        </div>
+
+                        {category.tools.length === 0 ? (
+                            <p class="text-[14px] italic text-[var(--color-ink-soft)]">
+                                Nothing here yet — coming soon.
+                            </p>
+                        ) : (
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                                {category.tools.map((tool) => (
+                                    <li>
+                                        <a
+                                            href={`${base}tools/${tool.slug}`}
+                                            class="block p-5 rounded border border-[var(--color-rule)] bg-[var(--color-paper-2)]/40 hover:bg-[var(--color-paper-2)] hover:border-[var(--color-ink-soft)] transition-colors h-full"
+                                        >
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-[17px] font-semibold tracking-tight text-[var(--color-ink)]">
+                                                    {tool.name}
+                                                </div>
+                                                {tool.status ===
+                                                    "coming-soon" && (
+                                                    <span class="text-[10px] uppercase tracking-wider text-[var(--color-mark)]">
+                                                        soon
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div class="mt-2 text-[13px] leading-relaxed text-[var(--color-ink-soft)]">
+                                                {tool.blurb}
+                                            </div>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </section>
+                ))
+            }
+        </div>
+
+        <footer
+            class="mt-20 pt-6 border-t border-[var(--color-rule)] text-[12px] text-[var(--color-ink-soft)]"
+        >
+            Long live the handmade web.
+        </footer>
+    </div>
 </Layout>
