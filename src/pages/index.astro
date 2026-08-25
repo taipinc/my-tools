@@ -7,11 +7,6 @@ const base = import.meta.env.BASE_URL;
 <Layout>
     <div class="px-10 py-16">
         <header class="mb-12">
-            <div
-                class="text-[12px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)] mb-3"
-            >
-                Welcome
-            </div>
             <h1 class="text-5xl font-semibold tracking-tight leading-tight">
                 Shabtai's Teaching Tools
             </h1>
@@ -60,9 +55,6 @@ const base = import.meta.env.BASE_URL;
                                                     </span>
                                                 )}
                                             </div>
-                                            <div class="mt-2 text-[13px] leading-relaxed text-[var(--color-ink-soft)]">
-                                                {tool.blurb}
-                                            </div>
                                         </a>
                                     </li>
                                 ))}
@@ -72,11 +64,5 @@ const base = import.meta.env.BASE_URL;
                 ))
             }
         </div>
-
-        <footer
-            class="mt-20 pt-6 border-t border-[var(--color-rule)] text-[12px] text-[var(--color-ink-soft)]"
-        >
-            Long live the handmade web.
-        </footer>
     </div>
 </Layout>
