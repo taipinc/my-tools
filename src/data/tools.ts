@@ -59,6 +59,13 @@ export const categories: Category[] = [
           "Rain, a bucket, and a metaphor for how photographic exposure works.",
         status: "live",
       },
+      {
+        slug: "exposure-scales",
+        name: "Exposure Scales",
+        blurb:
+          "Shutter, aperture, and ISO on three stop rulers, previewed on an HDR frame.",
+        status: "live",
+      },
     ],
   },
 ];
