@@ -56,7 +56,7 @@ src/
 
 ## Tool page layout
 
-Every tool page uses the same shell: a viewport-height flex column, with a compact header row (breadcrumb + title with the blurb sitting at the title's baseline on the right), and a single bordered container below that grows to fill the rest of the screen — the tool mounts inside that container.
+Every tool page uses the same shell: a viewport-height flex column, with a compact header row (breadcrumb + title), and a single bordered container below that grows to fill the rest of the screen — the tool mounts inside that container.
 
 Template (`src/pages/tools/<slug>.astro`):
 
@@ -79,10 +79,7 @@ const { tool, category } = findTool('<slug>')!;
         <span class="mx-2 opacity-60">/</span>
         <span class="text-[var(--color-ink)]">{tool.name}</span>
       </nav>
-      <div class="flex items-baseline justify-between gap-6">
-        <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
-        <p class="text-[14px] text-[var(--color-ink-soft)]">{tool.blurb}</p>
-      </div>
+      <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
     </div>
 
     <div class="flex-1 min-h-0 mx-10 mb-6 rounded-lg border border-[var(--color-rule)] bg-[#f5f5f5] overflow-hidden">
@@ -94,7 +91,7 @@ const { tool, category } = findTool('<slug>')!;
 
 Rules:
 - **Title** is always `text-3xl font-semibold tracking-tight` — never resize it per tool.
-- **Title and blurb sit side-by-side** on one row (`flex items-baseline justify-between gap-6`). Blurb is `text-[14px]`. Keep blurbs short so this row doesn't wrap.
+- **Blurbs are not displayed** anywhere right now — `blurb` stays in the registry (`src/data/tools.ts`) for future use, but tool pages and the home cards show only the tool name.
 - **Container fills the remaining viewport** (`flex-1 min-h-0`). Tools should size themselves to the container (use `ResizeObserver`, not `window.innerWidth`).
 - **Container background** is `bg-[#f5f5f5]` by default. Only override (e.g., `bg-white`) when a specific tool needs it.
 - The container has `overflow-hidden` — the tool itself must scroll internally if needed.
