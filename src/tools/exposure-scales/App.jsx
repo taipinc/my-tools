@@ -10,7 +10,10 @@ const DEFAULT_HDR = `${import.meta.env.BASE_URL}hdr/monkstown_castle_1k.hdr`;
 const MONO = "var(--font-mono, ui-monospace, monospace)";
 const INK = "var(--color-ink, #1c2840)";
 const INK_SOFT = "var(--color-ink-soft, #4d5b75)";
-const MARK = "var(--color-mark, #b8551e)";
+const SELECTOR = "#FC4B5A";
+
+// "1/125" → "125" for the scale ticks only; 1s has no fraction to drop.
+const tickLabel = (v) => v.replace(/^1\//, "");
 
 const GRAIN =
   "url(data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27140%27%20height=%27140%27%3E%3Cfilter%20id=%27n%27%3E%3CfeTurbulence%20type=%27fractalNoise%27%20baseFrequency=%270.85%27%20numOctaves=%272%27/%3E%3C/filter%3E%3Crect%20width=%27140%27%20height=%27140%27%20filter=%27url(%23n)%27/%3E%3C/svg%3E)";
@@ -83,7 +86,7 @@ function Scale({ label, value, labels, index, onChange }) {
           );
         })}
         <div style={{ position: "absolute", top: 0, bottom: 0, width: 0, left: `${(index / (n - 1)) * 100}%` }}>
-          <div style={{ position: "absolute", bottom: 31, left: 0, width: 22, height: 22, marginLeft: -11, borderRadius: "50%", background: MARK, border: `2.5px solid ${INK}`, boxShadow: "0 1px 3px rgba(28,40,64,0.18)" }} />
+          <div style={{ position: "absolute", bottom: 31, left: 0, width: 22, height: 22, marginLeft: -11, borderRadius: "50%", background: SELECTOR, border: `2.5px solid ${INK}`, boxShadow: "0 1px 3px rgba(28,40,64,0.18)" }} />
         </div>
       </div>
     </div>
@@ -204,7 +207,7 @@ export default function App() {
       <div style={{ flex: 1, padding: "34px 32px 28px", display: "flex", flexDirection: "column", minWidth: 520 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 8 }}>
           {showAt(pres, 1) && (
-            <Scale label="shutter (time)" value={SHUTTER[s]} labels={SHUTTER} index={s} onChange={setS} />
+            <Scale label="shutter (time)" value={SHUTTER[s]} labels={SHUTTER.map(tickLabel)} index={s} onChange={setS} />
           )}
           {showAt(pres, 2) && (
             <Scale label="aperture (opening)" value={`f/${APERTURE[a]}`} labels={APERTURE.map((v) => `f/${v}`)} index={a} onChange={setA} />
