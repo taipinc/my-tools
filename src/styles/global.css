@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono:
+    "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+    monospace;
   --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
 
   --color-paper: #eef2f8;
@@ -14,7 +16,8 @@
   --color-mark: #b8551e;
 }
 
-html, body {
+html,
+body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -43,14 +46,36 @@ html.menu-collapsed #site-sidebar {
   width: 52px;
 }
 
-html.menu-collapsed #site-sidebar .sidebar-full {
-  display: none;
+/* The toggle is anchored to the rail's right edge rather than sitting in
+   the header's flow, so it rides the width animation instead of being
+   re-laid-out by it — and at 52px it lands centred in the ribbon. */
+#site-sidebar .menu-toggle {
+  position: absolute;
+  top: 22px;
+  right: 11px;
+  z-index: 1;
 }
 
-html.menu-collapsed #site-sidebar .sidebar-head {
-  padding-left: 0;
-  padding-right: 0;
-  justify-content: center;
+/* Menu contents keep their full-width layout at every rail width, so the
+   title and links never re-wrap while the width animates — the rail just
+   clips them. They fade in once the rail has finished opening, and out
+   immediately when it closes. */
+#site-sidebar .sidebar-full {
+  width: 18rem;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 130ms ease 170ms,
+    visibility 0s linear 0s;
+}
+
+html.menu-collapsed #site-sidebar .sidebar-full {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 90ms ease 0s,
+    visibility 0s linear 90ms;
 }
 
 html.menu-collapsed .menu-toggle-close {
@@ -62,7 +87,8 @@ html:not(.menu-collapsed) .menu-toggle-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #site-sidebar {
+  #site-sidebar,
+  #site-sidebar .sidebar-full {
     transition: none;
   }
 }
