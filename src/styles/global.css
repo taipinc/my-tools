@@ -26,3 +26,43 @@ html, body {
   background: var(--color-accent-soft);
   color: var(--color-ink);
 }
+
+/* ---------------------------------------------------------------
+   Collapsible sidebar
+   The collapsed state lives as a class on <html> so an inline head
+   script can apply it before first paint (no flash of the full menu).
+   Activated by the user (toggle button) or by URL: ?menu=collapsed
+   / ?embed=1 — handy for embedding a single tool.
+   --------------------------------------------------------------- */
+#site-sidebar {
+  width: 18rem;
+  transition: width 180ms ease;
+}
+
+html.menu-collapsed #site-sidebar {
+  width: 52px;
+}
+
+html.menu-collapsed #site-sidebar .sidebar-full {
+  display: none;
+}
+
+html.menu-collapsed #site-sidebar .sidebar-head {
+  padding-left: 0;
+  padding-right: 0;
+  justify-content: center;
+}
+
+html.menu-collapsed .menu-toggle-close {
+  display: none;
+}
+
+html:not(.menu-collapsed) .menu-toggle-open {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #site-sidebar {
+    transition: none;
+  }
+}

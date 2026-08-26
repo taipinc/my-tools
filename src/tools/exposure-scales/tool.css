@@ -1,0 +1,61 @@
+.exposure-scales-root {
+    position: relative;
+}
+
+.exposure-scales-root .exposure-scales-mode-toggle {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    z-index: 5;
+    padding: 10px 16px;
+    background: #fff;
+    border: 2px solid var(--color-ink, #1c2840);
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--color-ink, #1c2840);
+}
+.exposure-scales-root .exposure-scales-mode-toggle:hover {
+    background: var(--color-ink, #1c2840);
+    color: #fff;
+}
+
+.exposure-scales-root .exposure-scales-presentation-nav {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    z-index: 6;
+    display: flex;
+    gap: 10px;
+}
+
+.exposure-scales-root .exposure-scales-nav-btn {
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid var(--color-ink, #1c2840);
+    background: #fff;
+    color: var(--color-ink, #1c2840);
+}
+.exposure-scales-root .exposure-scales-nav-btn:hover {
+    background: var(--color-ink, #1c2840);
+    color: #fff;
+}
+
+.exposure-scales-root .exposure-scales-nav-btn-primary {
+    background: var(--color-ink, #1c2840);
+    color: #fff;
+}
+.exposure-scales-root .exposure-scales-nav-btn-primary:hover {
+    background: var(--color-accent, #2f5a8c);
+    color: #fff;
+}
+
+.exposure-scales-root .exposure-scales-nav-btn-ghost {
+    background: transparent;
+    border-color: var(--color-rule, #c8d2e0);
+    color: var(--color-ink-soft, #4d5b75);
+}
