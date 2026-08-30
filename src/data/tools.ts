@@ -66,6 +66,13 @@ export const categories: Category[] = [
           "Shutter, aperture, and ISO on three stop rulers, previewed on an HDR frame.",
         status: "live",
       },
+      {
+        slug: "image-formats",
+        name: "Image Formats",
+        blurb:
+          "Film and sensor sizes side by side, at one scale — filter the list and the view zooms to fit.",
+        status: "live",
+      },
     ],
   },
 ];
