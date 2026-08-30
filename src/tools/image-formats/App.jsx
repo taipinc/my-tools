@@ -8,7 +8,7 @@ const MONO = "var(--font-mono, ui-monospace, monospace)";
 
 // Room around the drawing for the label chips and the scale bar.
 const PAD_X = 44;
-const PAD_TOP = 40;
+const PAD_TOP = 28;
 const PAD_BOTTOM = 64;
 
 const LABEL_GAP = 19; // minimum vertical distance between two chips
@@ -81,7 +81,10 @@ export default function App() {
   }, [shown, size]);
 
   const cx = size.w / 2;
-  const cy = (size.h - PAD_BOTTOM + PAD_TOP) / 2;
+  // Top-aligned, so the outermost frame starts level with the card on the
+  // right; any spare height is left below the drawing rather than split.
+  const tallest = shown.length ? Math.max(...shown.map((f) => f.h)) : 0;
+  const cy = PAD_TOP + (tallest * scale) / 2;
 
   // On a narrow stage the chips drop their measurements and carry the name
   // alone — the panel on the right still has the numbers.
@@ -117,10 +120,14 @@ export default function App() {
           (q) =>
             x0 < q.x0 + q.chipW &&
             q.x0 < x0 + chipW &&
-            Math.abs(labelY - q.labelY) < LABEL_GAP,
+            Math.abs(labelY - q.labelY) < LABEL_GAP - 0.5,
         );
         if (!hit) break;
-        labelY = hit.labelY + LABEL_GAP;
+        // Only ever downwards: a chip parked exactly one gap below its
+        // neighbour must not read as a collision again (floating-point
+        // distances land a hair under the gap), or it would bounce in place
+        // until the passes run out and land on top of the next chip.
+        labelY = Math.max(labelY, hit.labelY + LABEL_GAP);
       }
       labelY = Math.min(labelY, floor);
 
@@ -235,7 +242,7 @@ export default function App() {
           </div>
         )}
 
-        {shown.length > 0 && (
+        {shown.length > 0 && !compact && (
           <div className="image-formats-caption">
             All formats drawn at one scale
           </div>

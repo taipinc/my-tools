@@ -67,10 +67,12 @@
     font-style: italic;
 }
 
+/* Bottom-right, out of the way: the drawing now hangs from the top of the
+   stage and needs that corner. */
 .image-formats-root .image-formats-caption {
     position: absolute;
-    top: 14px;
-    left: 16px;
+    bottom: 18px;
+    right: 18px;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.16em;
