@@ -66,12 +66,6 @@ export const categories: Category[] = [
           "Shutter, aperture, and ISO on three stop rulers, previewed on an HDR frame.",
         status: "live",
       },
-    ],
-  },
-  {
-    slug: "core-lab-1",
-    name: "Core Lab 1",
-    tools: [
       {
         slug: "image-formats",
         name: "Image Formats",

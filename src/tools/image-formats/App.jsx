@@ -241,12 +241,6 @@ export default function App() {
             <span className="image-formats-scalebar-label">{bar.mm} mm</span>
           </div>
         )}
-
-        {shown.length > 0 && !compact && (
-          <div className="image-formats-caption">
-            All formats drawn at one scale
-          </div>
-        )}
       </div>
 
       <aside className="image-formats-panel">

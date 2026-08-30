@@ -67,19 +67,6 @@
     font-style: italic;
 }
 
-/* Bottom-right, out of the way: the drawing now hangs from the top of the
-   stage and needs that corner. */
-.image-formats-root .image-formats-caption {
-    position: absolute;
-    bottom: 18px;
-    right: 18px;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--color-ink-soft, #4d5b75);
-    opacity: 0.75;
-}
-
 .image-formats-root .image-formats-scalebar {
     position: absolute;
     left: 16px;
