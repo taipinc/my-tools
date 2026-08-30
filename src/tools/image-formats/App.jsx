@@ -1,25 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FORMATS, area, cropFactor, mm } from "./formats.js";
 
-const INK = "var(--color-ink, #1c2840)";
 const INK_SOFT = "var(--color-ink-soft, #4d5b75)";
 const RULE = "var(--color-rule, #c8d2e0)";
-const MONO = "var(--font-mono, ui-monospace, monospace)";
 
-// Room around the drawing for the label chips and the scale bar.
+// Room around the drawing for the scale bar.
 const PAD_X = 44;
 const PAD_TOP = 28;
 const PAD_BOTTOM = 64;
 
 const LABEL_GAP = 19; // minimum vertical distance between two chips
+const CHIP_H = 20; // rendered height of a chip
+const CHIP_INSET = 7; // gap between a chip and the edges of its own frame
 
-// Close enough to the rendered width of a chip to place it and to spot two
-// that would land on top of each other — the chips are one line of text at a
-// fixed size, so a per-character estimate does the job without measuring.
-const chipWidth = (f, compact) =>
-  34 +
-  f.name.length * 6.1 +
-  (compact ? 0 : `${mm(f.w)} × ${mm(f.h)} mm`.length * 5.8);
+// Close enough to the rendered width of a chip to fit it inside its frame and
+// to spot two that would land on top of each other — a chip is one line of
+// text at a fixed size, so a per-character estimate does the job without
+// measuring.
+const chipWidth = (f) => 26 + f.name.length * 6.4;
 
 const BAR_STEPS = [1, 2, 5, 10, 20, 25, 50, 100, 200, 500];
 
@@ -86,16 +84,12 @@ export default function App() {
   const tallest = shown.length ? Math.max(...shown.map((f) => f.h)) : 0;
   const cy = PAD_TOP + (tallest * scale) / 2;
 
-  // On a narrow stage the chips drop their measurements and carry the name
-  // alone — the panel on the right still has the numbers.
-  const compact = size.w > 0 && size.w < 640;
-
-  // Rectangles are concentric, so every chip wants the same corner region.
-  // Walk them big → small, hang each off its frame's left edge, and push one
-  // down whenever it would land on a chip already placed.
+  // Chips live inside the frame they name, at its top-left corner, and are
+  // pushed down to clear a chip already placed there. One that cannot fit
+  // inside its own frame is dropped rather than parked somewhere ambiguous —
+  // the card on the right names every format anyway.
   const placed = useMemo(() => {
     const done = [];
-    const floor = size.h - PAD_BOTTOM + 22;
 
     for (const f of shown) {
       const w = f.w * scale;
@@ -103,23 +97,16 @@ export default function App() {
       const left = cx - w / 2;
       const top = cy - h / 2;
 
-      // Chips hang off the left edge so they never sit on top of the frame
-      // they name — the small sensors are only a few pixels wide. A frame with
-      // no room to its left gets its chip inside instead.
-      const chipW = chipWidth(f, compact);
-      const outside = left - 6 - chipW >= 2;
-      // Outside chips are right-aligned to the frame's edge by the browser
-      // (translateX(-100%)), so their placement needs no width estimate — only
-      // the overlap test below works off one.
-      const labelX = outside ? left - 6 : left + 7;
-      const x0 = outside ? labelX - chipW : labelX;
+      const chipW = chipWidth(f);
+      if (chipW + CHIP_INSET * 2 > w) continue;
 
-      let labelY = top + 6;
+      const labelX = left + CHIP_INSET;
+      let labelY = top + CHIP_INSET - 1;
       for (let pass = 0; pass < 40; pass++) {
         const hit = done.find(
           (q) =>
-            x0 < q.x0 + q.chipW &&
-            q.x0 < x0 + chipW &&
+            labelX < q.labelX + q.chipW &&
+            q.labelX < labelX + chipW &&
             Math.abs(labelY - q.labelY) < LABEL_GAP - 0.5,
         );
         if (!hit) break;
@@ -129,13 +116,25 @@ export default function App() {
         // until the passes run out and land on top of the next chip.
         labelY = Math.max(labelY, hit.labelY + LABEL_GAP);
       }
-      labelY = Math.min(labelY, floor);
+      if (labelY + CHIP_H + CHIP_INSET > top + h) continue;
 
-      done.push({ format: f, w, h, left, top, labelX, labelY, x0, chipW, outside });
+      done.push({ format: f, labelX, labelY, chipW });
     }
 
     return done;
-  }, [shown, scale, cx, cy, compact, size.h]);
+  }, [shown, scale, cx, cy]);
+
+  const frames = useMemo(
+    () =>
+      shown.map((f) => ({
+        format: f,
+        w: f.w * scale,
+        h: f.h * scale,
+        left: cx - (f.w * scale) / 2,
+        top: cy - (f.h * scale) / 2,
+      })),
+    [shown, scale, cx, cy],
+  );
 
   // A bar of some round number of millimetres, kept in a comfortable range.
   const bar = useMemo(() => {
@@ -148,7 +147,7 @@ export default function App() {
   return (
     <div className="image-formats-body">
       <div ref={stageRef} className="image-formats-stage">
-        {placed.map(({ format: f, w, h, left, top }, i) => {
+        {frames.map(({ format: f, w, h, left, top }, i) => {
           const active = hovered === f.id;
           return (
             <div
@@ -171,28 +170,7 @@ export default function App() {
           );
         })}
 
-        {placed.map(({ format: f, top, left, labelY, outside }) => {
-          // A chip that had to be pushed clear of its neighbour gets a hairline
-          // back up to the corner of the frame it belongs to.
-          const drop = labelY + 9 - top;
-          if (!outside || drop < 14) return null;
-          return (
-            <div
-              key={`leader-${f.id}`}
-              className="image-formats-leader"
-              style={{
-                left: left - 4,
-                top,
-                height: drop,
-                background: f.color,
-                opacity: hovered === f.id ? 0.9 : 0.35,
-                transition: `left 320ms ${ease}, top 320ms ${ease}, height 320ms ${ease}, opacity 120ms linear`,
-              }}
-            />
-          );
-        })}
-
-        {placed.map(({ format: f, labelX, labelY, outside }, i) => {
+        {placed.map(({ format: f, labelX, labelY }, i) => {
           const active = hovered === f.id;
           return (
             <div
@@ -203,7 +181,6 @@ export default function App() {
               style={{
                 left: labelX,
                 top: labelY,
-                transform: outside ? "translateX(-100%)" : "none",
                 borderColor: active ? f.color : RULE,
                 zIndex: active ? 200 : 100 + i,
                 transition: `left 320ms ${ease}, top 320ms ${ease}`,
@@ -214,11 +191,6 @@ export default function App() {
                 style={{ background: f.color }}
               />
               <span style={{ color: f.color, fontWeight: 700 }}>{f.name}</span>
-              {!compact && (
-                <span className="image-formats-chip-dims">
-                  {mm(f.w)} × {mm(f.h)} mm
-                </span>
-              )}
             </div>
           );
         })}
@@ -294,10 +266,6 @@ export default function App() {
                 </label>
               );
             })}
-          </div>
-
-          <div className="image-formats-foot">
-            × = crop factor, next to full frame
           </div>
         </div>
       </aside>
