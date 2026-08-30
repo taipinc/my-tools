@@ -68,6 +68,19 @@ export const categories: Category[] = [
       },
     ],
   },
+  {
+    slug: "core-lab-1",
+    name: "Core Lab 1",
+    tools: [
+      {
+        slug: "image-formats",
+        name: "Image Formats",
+        blurb:
+          "Film and sensor sizes side by side, at one scale — filter the list and the view zooms to fit.",
+        status: "live",
+      },
+    ],
+  },
 ];
 
 export const allTools: Tool[] = categories.flatMap((c) => c.tools);

@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { findTool } from '../../data/tools';
+import ImageFormats from '../../tools/image-formats/index.jsx';
+
+const { tool, category } = findTool('image-formats')!;
+---
+
+<Layout title={tool.name} activeSlug={tool.slug}>
+  <div class="flex flex-col h-screen">
+    <div class="px-10 pt-8 pb-4 shrink-0">
+      <nav class="text-[12px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)] mb-2">
+        <a href={import.meta.env.BASE_URL} class="hover:text-[var(--color-ink)]">Home</a>
+        <span class="mx-2 opacity-60">/</span>
+        <span>{category.name}</span>
+        <span class="mx-2 opacity-60">/</span>
+        <span class="text-[var(--color-ink)]">{tool.name}</span>
+      </nav>
+      <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
+    </div>
+
+    <div class="flex-1 min-h-0 mx-10 mb-6 rounded-lg border border-[var(--color-rule)] bg-[#f5f5f5] overflow-hidden">
+      <ImageFormats client:only="react" />
+    </div>
+  </div>
+</Layout>

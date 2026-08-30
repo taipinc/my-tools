@@ -1,0 +1,242 @@
+.image-formats-root {
+    width: 100%;
+    height: 100%;
+    color: var(--color-ink, #1c2840);
+    font-size: 14px;
+}
+
+.image-formats-root .image-formats-body {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+
+/* ---- the drawing ------------------------------------------------------ */
+
+.image-formats-root .image-formats-stage {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.image-formats-root .image-formats-rect {
+    position: absolute;
+    border-style: solid;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+.image-formats-root .image-formats-chip {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 7px;
+    border: 1px solid var(--color-rule, #c8d2e0);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    font-size: 11.5px;
+    line-height: 1.35;
+    white-space: nowrap;
+    pointer-events: auto;
+    box-shadow: 0 1px 2px rgba(28, 40, 64, 0.08);
+}
+
+.image-formats-root .image-formats-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex: none;
+}
+
+.image-formats-root .image-formats-chip-dims {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    color: var(--color-ink-soft, #4d5b75);
+}
+
+.image-formats-root .image-formats-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-ink-soft, #4d5b75);
+    font-style: italic;
+}
+
+.image-formats-root .image-formats-caption {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-ink-soft, #4d5b75);
+    opacity: 0.75;
+}
+
+.image-formats-root .image-formats-scalebar {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.image-formats-root .image-formats-scalebar-line {
+    height: 8px;
+    border: 1px solid var(--color-ink-soft, #4d5b75);
+    border-top: none;
+}
+
+.image-formats-root .image-formats-scalebar-label {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11px;
+    color: var(--color-ink-soft, #4d5b75);
+}
+
+/* ---- the filter panel -------------------------------------------------
+   A card sitting inside the tool, the same white / 2px ink / 12px radius
+   panel the other lab tools use. ------------------------------------- */
+
+.image-formats-root .image-formats-panel {
+    flex: none;
+    padding: 28px 28px 28px 0;
+    overflow-y: auto;
+}
+
+.image-formats-root .image-formats-card {
+    width: 392px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+    border: 2px solid var(--color-ink, #1c2840);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.image-formats-root .image-formats-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.image-formats-root .image-formats-card-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.image-formats-root .image-formats-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.image-formats-root .image-formats-btns button {
+    padding: 5px 12px;
+    border: 2px solid var(--color-ink, #1c2840);
+    border-radius: 12px;
+    background: #fff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink, #1c2840);
+    cursor: pointer;
+}
+
+.image-formats-root .image-formats-btns button:hover {
+    background: var(--color-ink, #1c2840);
+    color: #fff;
+}
+
+.image-formats-root .image-formats-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-formats-root .image-formats-row {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    padding: 5px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.image-formats-root .image-formats-row:hover {
+    background: var(--color-paper, #eef2f8);
+}
+
+.image-formats-root .image-formats-row input {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    cursor: pointer;
+    align-self: center;
+}
+
+.image-formats-root .image-formats-row-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.image-formats-root .image-formats-row-dims,
+.image-formats-root .image-formats-row-crop {
+    flex: none;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 12px;
+    color: var(--color-ink-soft, #4d5b75);
+    text-align: right;
+}
+
+.image-formats-root .image-formats-row-crop {
+    width: 42px;
+}
+
+.image-formats-root .image-formats-row:not(.is-on) .image-formats-row-dims,
+.image-formats-root .image-formats-row:not(.is-on) .image-formats-row-crop {
+    opacity: 0.45;
+}
+
+.image-formats-root .image-formats-foot {
+    padding-top: 8px;
+    border-top: 1px solid var(--color-rule, #c8d2e0);
+    font-size: 11.5px;
+    color: var(--color-ink-soft, #4d5b75);
+}
+
+.image-formats-root .image-formats-leader {
+    position: absolute;
+    width: 1px;
+    z-index: 90;
+    pointer-events: none;
+}
+
+@media (max-width: 760px) {
+    /* Stacked: the drawing keeps a workable height and the page scrolls to
+       the card underneath it. */
+    .image-formats-root .image-formats-body {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    .image-formats-root .image-formats-stage {
+        flex: none;
+        height: 360px;
+    }
+    .image-formats-root .image-formats-panel {
+        padding: 0 16px 20px;
+    }
+    .image-formats-root .image-formats-card {
+        width: 100%;
+    }
+}
