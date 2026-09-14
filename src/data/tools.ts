@@ -67,6 +67,12 @@ export const categories: Category[] = [
         status: "live",
       },
       {
+        slug: "color-models",
+        name: "Color Models",
+        blurb: "Build a color with synchronized RGB and HSB sliders.",
+        status: "live",
+      },
+      {
         slug: "image-formats",
         name: "Image Formats",
         blurb:
