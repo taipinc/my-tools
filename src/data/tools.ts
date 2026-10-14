@@ -73,6 +73,12 @@ export const categories: Category[] = [
         status: "live",
       },
       {
+        slug: "color-spaces",
+        name: "Color Spaces",
+        blurb: "Sample sRGB, Adobe RGB, and ACES on a CIE 1931 chromaticity chart.",
+        status: "live",
+      },
+      {
         slug: "image-formats",
         name: "Image Formats",
         blurb:
