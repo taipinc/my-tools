@@ -64,7 +64,7 @@ function BitSelector({ rgb, bitDepth, onDepthChange, onChange }) {
   const positions = Array.from({ length: bitDepth }, (_, position) => position);
   const groups = bitDepth === 16 ? [positions.slice(0, 8), positions.slice(8)] : [positions];
   return (
-    <details className="color-models-selector" open>
+    <details className="color-models-selector">
       <summary>
         <span className="color-models-selector-heading">
           <strong>{bitDepth}-bit RGB</strong>
