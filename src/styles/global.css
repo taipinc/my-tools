@@ -46,6 +46,28 @@ html.menu-hidden #site-sidebar {
   display: none;
 }
 
+/* All live tools share these shell hooks, independently of their own root CSS.
+   Only the surrounding page chrome changes; each tool keeps its scrolling. */
+html.tool-embed,
+html.tool-embed body {
+  overflow: hidden;
+}
+
+html.tool-embed .tool-page {
+  height: 100vh;
+  height: 100dvh;
+}
+
+html.tool-embed .tool-page-header {
+  display: none;
+}
+
+html.tool-embed .tool-frame {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
 .page-heading-row {
   display: flex;
   align-items: center;

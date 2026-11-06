@@ -3,11 +3,13 @@ import '../styles/global.css';
 import { Font } from 'astro:assets';
 import Sidebar from '../components/Sidebar.astro';
 
-const { title, activeSlug } = Astro.props as { title?: string; activeSlug?: string };
+const { title, activeSlug, toolPage = false } = Astro.props as {
+  title?: string; activeSlug?: string; toolPage?: boolean;
+};
 const pageTitle = title ? `${title} — Shabtai's Teaching Tools` : "Shabtai's Teaching Tools";
 ---
 
-<html lang="en">
+<html lang="en" data-tool-page={toolPage ? "true" : undefined}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
@@ -36,6 +38,10 @@ const pageTitle = title ? `${title} — Shabtai's Teaching Tools` : "Shabtai's T
           var params = new URLSearchParams(window.location.search);
           var menu = params.get("menu");
           var embed = params.get("embed");
+          if (embed && /^tool$/i.test(embed) && document.documentElement.hasAttribute("data-tool-page")) {
+            document.documentElement.classList.add("tool-embed", "menu-hidden");
+            return;
+          }
           if (menu && /^hidden$/i.test(menu)) {
             document.documentElement.classList.add("menu-hidden");
             return;

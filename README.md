@@ -6,6 +6,9 @@ The menu starts collapsed and remembers the user's toggle preference.
 URL options override that preference:
 
 - `?menu=hidden` completely hides the sidebar and its toggle for that page.
+- `?embed=tool` shows only the interactive tool, filling the viewport with no
+  sidebar, page header, outer margins, or frame border. It works on every live
+  tool page; home and coming-soon pages keep their regular layout.
 - `?menu=expanded` opens the menu; `?menu=collapsed` collapses it.
 - Existing `?embed=1` links continue to collapse the menu.
 
@@ -14,6 +17,12 @@ Every page has a **Copy URL** button at the right of its breadcrumb row
 the current URL with `menu=hidden`, preserving other query parameters and the
 anchor (and removing the legacy `embed` option). A brief **Copied!** message
 confirms success. Hidden mode does not change the saved menu preference.
+
+For example, embed Color Models with
+`/my-tools/tools/color-models?embed=tool`. This mode also leaves saved menu
+preferences unchanged. New live tool pages should pass `toolPage` to `Layout`
+and use the shared `tool-page`, `tool-page-header`, and `tool-frame` classes
+on their shell, header, and interactive container, respectively.
 
 ```sh
 npm create astro@latest -- --template minimal

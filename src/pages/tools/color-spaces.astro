@@ -7,9 +7,9 @@ import ColorSpaces from '../../tools/color-spaces/index.jsx';
 const { tool, category } = findTool('color-spaces')!;
 ---
 
-<Layout title={tool.name} activeSlug={tool.slug}>
-  <div class="flex flex-col h-screen">
-    <div class="px-10 pt-8 pb-4 shrink-0">
+<Layout title={tool.name} activeSlug={tool.slug} toolPage>
+  <div class="tool-page flex flex-col h-screen">
+    <div class="tool-page-header px-10 pt-8 pb-4 shrink-0">
       <div class="page-heading-row mb-2">
         <nav class="text-[12px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)]">
           <a href={import.meta.env.BASE_URL} class="hover:text-[var(--color-ink)]">Home</a>
@@ -22,7 +22,7 @@ const { tool, category } = findTool('color-spaces')!;
       </div>
       <h1 class="text-3xl font-semibold tracking-tight">{tool.name}</h1>
     </div>
-    <div class="flex-1 min-h-0 mx-10 mb-6 rounded-lg border border-[var(--color-rule)] bg-[#f5f5f5] overflow-hidden">
+    <div class="tool-frame flex-1 min-h-0 mx-10 mb-6 rounded-lg border border-[var(--color-rule)] bg-[#f5f5f5] overflow-hidden">
       <ColorSpaces client:only="react" />
     </div>
   </div>
