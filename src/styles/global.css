@@ -34,12 +34,57 @@ body {
    Collapsible sidebar
    The collapsed state lives as a class on <html> so an inline head
    script can apply it before first paint (no flash of the full menu).
-   Activated by the user (toggle button) or by URL: ?menu=collapsed
-   / ?embed=1 — handy for embedding a single tool.
+   Collapsed by default; ?menu=hidden removes the whole sidebar.
+   Legacy ?menu=collapsed / ?embed=1 links still work.
    --------------------------------------------------------------- */
 #site-sidebar {
   width: 18rem;
   transition: width 180ms ease;
+}
+
+html.menu-hidden #site-sidebar {
+  display: none;
+}
+
+.page-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.page-heading-row > nav {
+  min-width: 0;
+}
+
+.page-share {
+  flex-shrink: 0;
+}
+
+.copy-url {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-rule);
+  border-radius: 6px;
+  background: var(--color-paper);
+  color: var(--color-ink-soft);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.copy-url:hover,
+.copy-url[data-copied="true"] {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
+}
+
+.copy-url:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 html.menu-collapsed #site-sidebar {

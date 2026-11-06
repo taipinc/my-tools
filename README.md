@@ -1,5 +1,20 @@
 # Astro Starter Kit: Minimal
 
+## Navigation and sharing
+
+The menu starts collapsed and remembers the user's toggle preference.
+URL options override that preference:
+
+- `?menu=hidden` completely hides the sidebar and its toggle for that page.
+- `?menu=expanded` opens the menu; `?menu=collapsed` collapses it.
+- Existing `?embed=1` links continue to collapse the menu.
+
+Every page has a **Copy URL** button at the right of its breadcrumb row
+(or beside the heading on the home page). It copies
+the current URL with `menu=hidden`, preserving other query parameters and the
+anchor (and removing the legacy `embed` option). A brief **Copied!** message
+confirms success. Hidden mode does not change the saved menu preference.
+
 ```sh
 npm create astro@latest -- --template minimal
 ```

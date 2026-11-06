@@ -1,0 +1,57 @@
+<div class="page-share">
+  <button type="button" id="copy-url" class="copy-url" title="Copy a link with navigation hidden">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="8" y="8" width="12" height="12" rx="2" />
+      <path d="M16 8V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4" />
+    </svg>
+    <span id="copy-url-label" role="status" aria-live="polite">Copy URL</span>
+  </button>
+</div>
+
+<script>
+  const button = document.getElementById('copy-url') as HTMLButtonElement;
+  const label = document.getElementById('copy-url-label')!;
+  let resetTimer: ReturnType<typeof setTimeout>;
+
+  // Also support browsers/embeds where the Clipboard API is unavailable.
+  function copyFallback(value: string) {
+    const input = document.createElement('textarea');
+    input.value = value;
+    input.readOnly = true;
+    input.style.position = 'fixed';
+    input.style.opacity = '0';
+    document.body.append(input);
+    input.select();
+    try {
+      if (!document.execCommand('copy')) throw new Error('Copy unavailable');
+    } finally {
+      input.remove();
+      button.focus({ preventScroll: true });
+    }
+  }
+
+  button.addEventListener('click', async () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('menu', 'hidden');
+    url.searchParams.delete('embed');
+    clearTimeout(resetTimer);
+    button.disabled = true;
+    try {
+      try {
+        await navigator.clipboard.writeText(url.href);
+      } catch {
+        copyFallback(url.href);
+      }
+      label.textContent = 'Copied!';
+      button.dataset.copied = 'true';
+    } catch {
+      label.textContent = 'Try again';
+    } finally {
+      button.disabled = false;
+      resetTimer = setTimeout(() => {
+        label.textContent = 'Copy URL';
+        delete button.dataset.copied;
+      }, 2000);
+    }
+  });
+</script>

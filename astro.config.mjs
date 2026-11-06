@@ -19,6 +19,11 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    // Pre-bundle the canvas renderer before a client-only island requests it.
+    // Late discovery can invalidate dependency URLs already loaded by the browser.
+    optimizeDeps: {
+      include: ["react-konva"],
+    },
     server: { port: 4327, strictPort: true },
   },
 });

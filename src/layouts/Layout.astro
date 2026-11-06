@@ -18,7 +18,8 @@ const pageTitle = title ? `${title} — Shabtai's Teaching Tools` : "Shabtai's T
     <script is:inline>
       // Resolve the sidebar state before first paint so an embed never
       // flashes the full menu. Precedence: URL param > this tab's choice
-      // > the saved preference. URL: ?menu=collapsed|expanded, ?embed=1
+      // > the saved preference > collapsed. ?menu=hidden removes the menu
+      // and toggle entirely for this URL, without changing saved preferences.
       (function () {
         var KEY = "shabtai-tools:menu-collapsed";
         var collapsed = null;
@@ -35,8 +36,12 @@ const pageTitle = title ? `${title} — Shabtai's Teaching Tools` : "Shabtai's T
           var params = new URLSearchParams(window.location.search);
           var menu = params.get("menu");
           var embed = params.get("embed");
+          if (menu && /^hidden$/i.test(menu)) {
+            document.documentElement.classList.add("menu-hidden");
+            return;
+          }
           if (menu !== null) {
-            if (/^(collapsed|collapse|closed|hidden|ribbon|0|false)$/i.test(menu))
+            if (/^(collapsed|collapse|closed|ribbon|0|false)$/i.test(menu))
               collapsed = true;
             else if (/^(expanded|expand|open|full|1|true)$/i.test(menu))
               collapsed = false;
@@ -61,7 +66,7 @@ const pageTitle = title ? `${title} — Shabtai's Teaching Tools` : "Shabtai's T
           var saved = read("localStorage");
           if (saved !== null) collapsed = saved === "1";
         }
-        if (collapsed) document.documentElement.classList.add("menu-collapsed");
+        if (collapsed !== false) document.documentElement.classList.add("menu-collapsed");
       })();
     </script>
   </head>

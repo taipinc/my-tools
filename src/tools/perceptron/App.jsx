@@ -68,7 +68,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen p-6 md:p-10">
+    <div className="min-h-full p-6 md:p-10">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8 flex items-end justify-between">
